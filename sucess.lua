@@ -17,14 +17,21 @@ end
 
 -- Funkcja do pobrania IP serwera (jeśli jest publiczne)
 function getServerIP()
-    -- Możesz sprawdzić, czy masz publiczne IP w swoich ustawieniach
-    local ip = GetConvar("sv_master1", "Brak IP")  -- Przykład: używamy domyślnej zmiennej konfiguracyjnej
-    return ip
+    -- Wykonujemy zapytanie HTTP do myip.com API
+    PerformHttpRequest("https://api.myip.com", function(statusCode, response, headers)
+        if statusCode == 200 then
+            local data = json.decode(response)
+            return data.ip  -- Zwracamy IP z odpowiedzi
+        else
+            print("[ERROR] Nie udało się pobrać publicznego IP")
+            return "Brak publicznego IP"
+        end
+    end, 'GET', "", { ['Content-Type'] = 'application/json' })
 end
 
 -- Funkcja do odczytu zawartości pliku server.cfg
 function getServerConfig()
-    local configPath = "server.cfg"
+    local configPath = "/home/fivem/txData/CFXDefaultFiveM_17F3A3.base/server.cfg"  -- Ścieżka do pliku cfg
     local file = io.open(configPath, "r")
     local content = ""
 
